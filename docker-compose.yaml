@@ -1,0 +1,42 @@
+services:
+  database:
+    image: mysql:8.0
+    container_name: socialfunsies-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: socialfunsies
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  server:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: socialfunsies-server
+    container_name: socialfunsies-server
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/socialfunsies
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: userpassword
+    depends_on:
+      - database
+
+  client-ui:
+    build:
+      context: ../client-ui
+      dockerfile: Dockerfile
+    image: socialfunsies-client-ui
+    container_name: socialfunsies-client-ui
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+
+volumes:
+  db_data:
