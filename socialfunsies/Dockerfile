@@ -8,7 +8,7 @@ LABEL authors="alexanderlandaverde"
 WORKDIR /app
 
 # Copy the JAR file from the target directory into the container at /app
-COPY ../socialfunsies/target/socialfunsies-0.0.1-SNAPSHOT.jar /app/socialfunsies.jar
+COPY target/socialfunsies-0.0.1-SNAPSHOT.jar /app/socialfunsies.jar
 
 # Make port 8080 available to the world outside this container
 EXPOSE 8080

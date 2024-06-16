@@ -1,38 +1,24 @@
-# Stage 1: Build the Angular application
 FROM node:18.19.0 AS build
 
-# Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies
+
 RUN npm install
 
-# Copy the rest of the application source code
 COPY . .
 
-# Build the Angular application
 RUN npm run build
 
-# Stage 2: Run the Express server
-FROM node:18.19.0
+FROM nginx:alpine
 
-# Set the working directory
-WORKDIR /app
+RUN rm -rf /usr/share/nginx/html/*
 
-# Copy the build output from the previous stage
-COPY --from=build /app/dist /app/dist
+COPY --from=build /app/dist/client-ui /usr/share/nginx/html
 
-# Copy necessary files
-COPY package*.json ./
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Install only production dependencies
-RUN npm install --only=production
+EXPOSE 80
 
-# Expose port 4000 to the outside world
-EXPOSE 4000
-
-# Start the server
-CMD ["node", "dist/server/main.js"]
+CMD ["nginx", "-g", "daemon off;"]

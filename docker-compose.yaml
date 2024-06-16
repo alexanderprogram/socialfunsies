@@ -14,8 +14,8 @@ services:
 
   server:
     build:
-      context: .
-      dockerfile: docker/Dockerfile
+      context: ./socialfunsies
+      dockerfile: Dockerfile
     image: socialfunsies-server
     container_name: socialfunsies-server
     ports:
@@ -29,7 +29,7 @@ services:
 
   client-ui:
     build:
-      context: ../client-ui
+      context: ./client-ui
       dockerfile: Dockerfile
     image: socialfunsies-client-ui
     container_name: socialfunsies-client-ui
