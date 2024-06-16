@@ -24,8 +24,14 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/socialfunsies
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: userpassword
+      DB_HOST: database
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASS: rootpassword
     depends_on:
       - database
+    env_file:
+      - ./socialfunsies/.env.backend
 
   client-ui:
     build:
@@ -35,8 +41,12 @@ services:
     container_name: socialfunsies-client-ui
     ports:
       - "80:80"
+    environment:
+      API_URL: http://localhost:8080/api
     depends_on:
       - server
+    env_file:
+      - ./client-ui/.env.client
 
 volumes:
   db_data:
