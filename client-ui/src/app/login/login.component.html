@@ -1,14 +1,25 @@
 <div class="login-container">
+  <div class="header">
+    <div class="favicon"></div>
+    <div class="title">Social Funsies</div>
+  </div>
+
   <form (ngSubmit)="onSubmit()">
-    <div>
-      <label for="username">Username</label>
-      <input type="text" id="username" [(ngModel)]="username" name="username" required>
+    <div class="form-content">
+      <div>
+        <label for="username">Username</label>
+        <input type="text" id="username" [(ngModel)]="username" name="username" required>
+      </div>
+
+      <div>
+        <label for="password">Password</label>
+        <input type="password" id="password" [(ngModel)]="password" name="password" required>
+      </div>
     </div>
-    <div>
-      <label for="password">Password</label>
-      <input type="password" id="password" [(ngModel)]="password" name="password" required>
+
+    <div class="button-container">
+      <button type="submit">Login</button>
+      <button type="button" (click)="onRegister()">Register</button>
     </div>
-    <button type="submit">Login</button>
-    <button type="button" (click)="onRegister()">Register</button>
   </form>
 </div>
